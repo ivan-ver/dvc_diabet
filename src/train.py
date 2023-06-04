@@ -5,7 +5,7 @@ import pickle
 import yaml
 
 from sklearn.ensemble import BaggingClassifier
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.linear_model import LogisticRegression
 
 if len(sys.argv) != 3:
     sys.stderr.write("Arguments error. Usage:\n")
@@ -25,7 +25,7 @@ X = train_df.drop('diabetes', axis=1)
 
 
 model = BaggingClassifier(
-    DecisionTreeClassifier(),
+    LogisticRegression(),
     bootstrap=True,
     n_estimators=500,
     n_jobs=-1,
