@@ -1,0 +1,53 @@
+stages:
+  prepare:
+    cmd: python3 src/prepare.py data/diabetes_prediction_dataset.csv
+    deps:
+    - data/diabetes_prediction_dataset.csv
+    - src/prepare.py
+    params:
+    - prepare.seed
+    - prepare.split
+    outs:
+    - data/prepared
+  train:
+    cmd: python3 src/train.py data/prepared/train.csv model.pkl
+    deps:
+    - data/prepared/train.csv
+    - src/train.py
+    params:
+    - train.seed
+    outs:
+    - model.pkl
+  evaluate:
+    cmd: python3 src/evaluate.py data/prepared model.pkl
+    deps:
+    - data/prepared
+    - model.pkl
+    - src/evaluate.py
+    outs:
+    - eval/live/plots:
+        cache: false
+    - eval/prc:
+        cache: false
+    metrics:
+    - eval/live/metrics.json:
+        cache: false
+plots:
+  - ROC:
+      template: simple
+      x: fpr
+      y:
+        eval/live/plots/sklearn/roc/train.json: tpr
+        eval/live/plots/sklearn/roc/test.json: tpr
+  - Confusion-Matrix:
+      template: confusion
+      x: actual
+      y:
+        eval/live/plots/sklearn/cm/train.json: predicted
+        eval/live/plots/sklearn/cm/test.json: predicted
+  - Precision-Recall:
+      template: simple
+      x: recall
+      y:
+        eval/prc/train.json: precision
+        eval/prc/test.json: precision
