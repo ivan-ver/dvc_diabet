@@ -1,0 +1,61 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python3 src/prepare.py data/diabetes_prediction_dataset.csv
+    deps:
+    - path: data/diabetes_prediction_dataset.csv
+      md5: cb243b99d81d96e9aeb08944ce9ac066
+      size: 3810356
+    - path: src/prepare.py
+      md5: 5c50246dda7a567d0b7b337ae1169db9
+      size: 1319
+    params:
+      params.yaml:
+        prepare.seed: 20170428
+        prepare.split: 0.2
+    outs:
+    - path: data/prepared
+      md5: 6240128d30f661586daa9778e0afe065.dir
+      size: 10058119
+      nfiles: 2
+  train:
+    cmd: python3 src/train.py data/prepared/train.csv model.pkl
+    deps:
+    - path: data/prepared/train.csv
+      md5: f5b6c179c85766a794dedacecb8b97d0
+      size: 8045545
+    - path: src/train.py
+      md5: b6d3360fb16af2752d882be8fc6263a4
+      size: 604
+    params:
+      params.yaml:
+        train.seed: 20170428
+    outs:
+    - path: model.pkl
+      md5: 491b6e456247c4fac8a270572af93c0c
+      size: 48050482
+  evaluate:
+    cmd: python3 src/evaluate.py data/prepared model.pkl
+    deps:
+    - path: data/prepared
+      md5: 6240128d30f661586daa9778e0afe065.dir
+      size: 10058119
+      nfiles: 2
+    - path: model.pkl
+      md5: 491b6e456247c4fac8a270572af93c0c
+      size: 48050482
+    - path: src/evaluate.py
+      md5: 8e3fdc389ff97051870ef3adf3f7ac22
+      size: 2132
+    outs:
+    - path: eval/live/metrics.json
+      md5: 09d49bb7cf0d567030caf21ff790bfc6
+      size: 196
+    - path: eval/live/plots
+      md5: 1495b99b54407e5dfb5eb75cd548350f.dir
+      size: 6168031
+      nfiles: 4
+    - path: eval/prc
+      md5: 088d33ad723fa0d945320640cfcb39c3.dir
+      size: 106975
+      nfiles: 2

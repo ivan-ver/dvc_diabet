@@ -1,0 +1,6 @@
+prepare:
+  split: 0.20
+  seed: 20170428
+train:
+  seed: 20170428
+
