@@ -1,5 +1,16 @@
+artifacts:
+  cv-classification:
+    path: models/resnet.pt
+    type: model
+    desc: 'CV classification model, ResNet50'
+    labels:
+      - resnet50
+      - classification
+    meta:
+      framework: pytorch
 stages:
   prepare:
+    desc: описание стадии prepare
     cmd: python3 src/prepare.py data/diabetes_prediction_dataset.csv
     deps:
     - data/diabetes_prediction_dataset.csv
@@ -10,6 +21,7 @@ stages:
     outs:
     - data/prepared
   train:
+    desc: описание стадии train 
     cmd: python3 src/train.py data/prepared/train.csv model.pkl
     deps:
     - data/prepared/train.csv

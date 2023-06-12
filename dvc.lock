@@ -7,8 +7,8 @@ stages:
       md5: cb243b99d81d96e9aeb08944ce9ac066
       size: 3810356
     - path: src/prepare.py
-      md5: 268f511a5be31472af1c4ba91850017d
-      size: 2006
+      md5: d4a2868274f646658b11ae96240e7e25
+      size: 1514
     params:
       params.yaml:
         prepare.seed: 20170428
