@@ -15,15 +15,15 @@ stages:
         prepare.split: 0.2
     outs:
     - path: data/prepared
-      md5: 6240128d30f661586daa9778e0afe065.dir
-      size: 10058119
+      md5: d67d5be1616c1b07040282b978c7eb70.dir
+      size: 9954241
       nfiles: 2
   train:
     cmd: python3 src/train.py data/prepared/train.csv model.pkl
     deps:
     - path: data/prepared/train.csv
-      md5: f5b6c179c85766a794dedacecb8b97d0
-      size: 8045545
+      md5: e72b9ecbb18c7fdd9121be0513e3ae9a
+      size: 7943028
     - path: src/train.py
       md5: 43aa27e355ca38b63efd497fe79a53fa
       size: 749
@@ -32,18 +32,18 @@ stages:
         train.seed: 20170428
     outs:
     - path: model.pkl
-      md5: dd9b8e55c16142ed4e234462969224d2
-      size: 1641361
+      md5: fe175d57434bf8a0c5b534b530ff3e9c
+      size: 1217
   evaluate:
     cmd: python3 src/evaluate.py data/prepared model.pkl
     deps:
     - path: data/prepared
-      md5: 6240128d30f661586daa9778e0afe065.dir
-      size: 10058119
+      md5: d67d5be1616c1b07040282b978c7eb70.dir
+      size: 9954241
       nfiles: 2
     - path: model.pkl
-      md5: dd9b8e55c16142ed4e234462969224d2
-      size: 1641361
+      md5: fe175d57434bf8a0c5b534b530ff3e9c
+      size: 1217
     - path: src/evaluate.py
       md5: 8e3fdc389ff97051870ef3adf3f7ac22
       size: 2132
